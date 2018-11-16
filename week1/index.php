@@ -9,18 +9,18 @@
 include 'model.php';
 
 /* Landing page */
-if (new_route('/DDWT18/week1/', 'get')) {
+if (new_route('/ddwt18/week1/', 'get')) {
     /* Page info */
     $page_title = 'Home';
     $breadcrumbs = get_breadcrumbs([
-        'DDWT18' => na('/DDWT18/', False),
-        'Week 1' => na('/DDWT18/week1/', False),
-        'Home' => na('/DDWT18/week1/', True)
+        'ddwt18' => na('/ddwt18/', False),
+        'Week 1' => na('/ddwt18/week1/', False),
+        'Home' => na('/ddwt18/week1/', True)
     ]);
     $navigation = get_navigation([
-        'Home' => na('/DDWT18/week1/', True),
-        'Overview' => na('/DDWT18/week1/overview/', False),
-        'Add Series' => na('/DDWT18/week1/add/', False)
+        'Home' => na('/ddwt18/week1/', True),
+        'Overview' => na('/ddwt18/week1/overview/', False),
+        'Add Series' => na('/ddwt18/week1/add/', False)
     ]);
 
     /* Page content */
@@ -33,18 +33,18 @@ if (new_route('/DDWT18/week1/', 'get')) {
 }
 
 /* Overview page */
-elseif (new_route('/DDWT18/week1/overview/', 'get')) {
+elseif (new_route('/ddwt18/week1/overview/', 'get')) {
     /* Page info */
     $page_title = 'Overview';
     $breadcrumbs = get_breadcrumbs([
-        'DDWT18' => na('/DDWT18/', False),
-        'Week 1' => na('/DDWT18/week1/', False),
-        'Overview' => na('/DDWT18/week1/overview', True)
+        'ddwt18' => na('/ddwt18/', False),
+        'Week 1' => na('/ddwt18/week1/', False),
+        'Overview' => na('/ddwt18/week1/overview', True)
     ]);
     $navigation = get_navigation([
-        'Home' => na('/DDWT18/week1/', False),
-        'Overview' => na('/DDWT18/week1/overview', True),
-        'Add Series' => na('/DDWT18/week1/add/', False)
+        'Home' => na('/ddwt18/week1/', False),
+        'Overview' => na('/ddwt18/week1/overview', True),
+        'Add Series' => na('/ddwt18/week1/add/', False)
     ]);
 
     /* Page content */
@@ -62,12 +62,12 @@ elseif (new_route('/DDWT18/week1/overview/', 'get')) {
         <tbody>
         <tr>
             <th scope="row">House of Cards</th>
-            <td><a href="/DDWT18/week1/serie/" role="button" class="btn btn-primary">More info</a></td>
+            <td><a href="/ddwt18/week1/serie/" role="button" class="btn btn-primary">More info</a></td>
         </tr>
 
         <tr>
             <th scope="row">Game of Thrones</th>
-            <td><a href="/DDWT18/week1/serie/" role="button" class="btn btn-primary">More info</a></td>
+            <td><a href="/ddwt18/week1/serie/" role="button" class="btn btn-primary">More info</a></td>
         </tr>
 
         </tbody>
@@ -78,7 +78,7 @@ elseif (new_route('/DDWT18/week1/overview/', 'get')) {
 }
 
 /* Single Serie */
-elseif (new_route('/DDWT18/week1/serie/', 'get')) {
+elseif (new_route('/ddwt18/week1/serie/', 'get')) {
     /* Get series from db */
     $serie_name = 'House of Cards';
     $serie_abstract = 'A Congressman works with his equally conniving wife to exact revenge on the people who betrayed him.';
@@ -88,15 +88,15 @@ elseif (new_route('/DDWT18/week1/serie/', 'get')) {
     /* Page info */
     $page_title = $serie_name;
     $breadcrumbs = get_breadcrumbs([
-        'DDWT18' => na('/DDWT18/', False),
-        'Week 1' => na('/DDWT18/week1/', False),
-        'Overview' => na('/DDWT18/week1/overview/', False),
-        $serie_name => na('/DDWT18/week1/serie/', True)
+        'ddwt18' => na('/ddwt18/', False),
+        'Week 1' => na('/ddwt18/week1/', False),
+        'Overview' => na('/ddwt18/week1/overview/', False),
+        $serie_name => na('/ddwt18/week1/serie/', True)
     ]);
     $navigation = get_navigation([
-        'Home' => na('/DDWT18/week1/', False),
-        'Overview' => na('/DDWT18/week1/overview', True),
-        'Add Series' => na('/DDWT18/week1/add/', False)
+        'Home' => na('/ddwt18/week1/', False),
+        'Overview' => na('/ddwt18/week1/overview', True),
+        'Add Series' => na('/ddwt18/week1/add/', False)
     ]);
 
     /* Page content */
@@ -109,18 +109,18 @@ elseif (new_route('/DDWT18/week1/serie/', 'get')) {
 }
 
 /* Add serie GET */
-elseif (new_route('/DDWT18/week1/add/', 'get')) {
+elseif (new_route('/ddwt18/week1/add/', 'get')) {
     /* Page info */
     $page_title = 'Add Series';
     $breadcrumbs = get_breadcrumbs([
-        'DDWT18' => na('/DDWT18/', False),
-        'Week 1' => na('/DDWT18/week1/', False),
-        'Add Series' => na('/DDWT18/week1/new/', True)
+        'ddwt18' => na('/ddwt18/', False),
+        'Week 1' => na('/ddwt18/week1/', False),
+        'Add Series' => na('/ddwt18/week1/new/', True)
     ]);
     $navigation = get_navigation([
-        'Home' => na('/DDWT18/week1/', False),
-        'Overview' => na('/DDWT18/week1/overview', False),
-        'Add Series' => na('/DDWT18/week1/add/', True)
+        'Home' => na('/ddwt18/week1/', False),
+        'Overview' => na('/ddwt18/week1/overview', False),
+        'Add Series' => na('/ddwt18/week1/add/', True)
     ]);
 
     /* Page content */
@@ -128,25 +128,25 @@ elseif (new_route('/DDWT18/week1/add/', 'get')) {
     $page_subtitle = 'Add your favorite series';
     $page_content = 'Fill in the details of you favorite series.';
     $submit_btn = "Add Series";
-    $form_action = '/DDWT18/week1/add/';
+    $form_action = '/ddwt18/week1/add/';
 
     /* Choose Template */
     include use_template('new');
 }
 
 /* Add serie POST */
-elseif (new_route('/DDWT18/week1/add/', 'post')) {
+elseif (new_route('/ddwt18/week1/add/', 'post')) {
     /* Page info */
     $page_title = 'Add Series';
     $breadcrumbs = get_breadcrumbs([
-        'DDWT18' => na('/DDWT18/', False),
-        'Week 1' => na('/DDWT18/week1/', False),
-        'Add Series' => na('/DDWT18/week1/add/', True)
+        'ddwt18' => na('/ddwt18/', False),
+        'Week 1' => na('/ddwt18/week1/', False),
+        'Add Series' => na('/ddwt18/week1/add/', True)
     ]);
     $navigation = get_navigation([
-        'Home' => na('/DDWT18/week1/', False),
-        'Overview' => na('/DDWT18/week1/overview', False),
-        'Add Series' => na('/DDWT18/week1/add/', True)
+        'Home' => na('/ddwt18/week1/', False),
+        'Overview' => na('/ddwt18/week1/overview', False),
+        'Add Series' => na('/ddwt18/week1/add/', True)
     ]);
 
     /* Page content */
@@ -154,13 +154,13 @@ elseif (new_route('/DDWT18/week1/add/', 'post')) {
     $page_subtitle = 'Add your favorite series';
     $page_content = 'Fill in the details of you favorite series.';
     $submit_btn = "Add Series";
-    $form_action = '/DDWT18/week1/add/';
+    $form_action = '/ddwt18/week1/add/';
 
     include use_template('new');
 }
 
 /* Edit serie GET */
-elseif (new_route('/DDWT18/week1/edit/', 'get')) {
+elseif (new_route('/ddwt18/week1/edit/', 'get')) {
     /* Get serie info from db */
     $serie_name = 'House of Cards';
     $serie_abstract = 'A Congressman works with his equally conniving wife to exact revenge on the people who betrayed him.';
@@ -170,14 +170,14 @@ elseif (new_route('/DDWT18/week1/edit/', 'get')) {
     /* Page info */
     $page_title = 'Edit Series';
     $breadcrumbs = get_breadcrumbs([
-        'DDWT18' => na('/DDWT18/', False),
-        'Week 1' => na('/DDWT18/week1/', False),
-        sprintf("Edit Series %s", $serie_name) => na('/DDWT18/week1/new/', True)
+        'ddwt18' => na('/ddwt18/', False),
+        'Week 1' => na('/ddwt18/week1/', False),
+        sprintf("Edit Series %s", $serie_name) => na('/ddwt18/week1/new/', True)
     ]);
     $navigation = get_navigation([
-        'Home' => na('/DDWT18/week1/', False),
-        'Overview' => na('/DDWT18/week1/overview', False),
-        'Add Series' => na('/DDWT18/week1/add/', False)
+        'Home' => na('/ddwt18/week1/', False),
+        'Overview' => na('/ddwt18/week1/overview', False),
+        'Add Series' => na('/ddwt18/week1/add/', False)
     ]);
 
     /* Page content */
@@ -190,7 +190,7 @@ elseif (new_route('/DDWT18/week1/edit/', 'get')) {
 }
 
 /* Edit serie POST */
-elseif (new_route('/DDWT18/week1/edit/', 'post')) {
+elseif (new_route('/ddwt18/week1/edit/', 'post')) {
     /* Get serie info from db */
     $serie_name = 'House of Cards';
     $serie_abstract = 'A Congressman works with his equally conniving wife to exact revenge on the people who betrayed him.';
@@ -200,15 +200,15 @@ elseif (new_route('/DDWT18/week1/edit/', 'post')) {
     /* Page info */
     $page_title = $serie_info['name'];
     $breadcrumbs = get_breadcrumbs([
-        'DDWT18' => na('/DDWT18/', False),
-        'Week 1' => na('/DDWT18/week1/', False),
-        'Overview' => na('/DDWT18/week1/overview/', False),
-        $serie_name => na('/DDWT18/week1/serie/', True)
+        'ddwt18' => na('/ddwt18/', False),
+        'Week 1' => na('/ddwt18/week1/', False),
+        'Overview' => na('/ddwt18/week1/overview/', False),
+        $serie_name => na('/ddwt18/week1/serie/', True)
     ]);
     $navigation = get_navigation([
-        'Home' => na('/DDWT18/week1/', False),
-        'Overview' => na('/DDWT18/week1/overview', False),
-        'Add Series' => na('/DDWT18/week1/add/', False)
+        'Home' => na('/ddwt18/week1/', False),
+        'Overview' => na('/ddwt18/week1/overview', False),
+        'Add Series' => na('/ddwt18/week1/add/', False)
     ]);
 
     /* Page content */
@@ -221,7 +221,7 @@ elseif (new_route('/DDWT18/week1/edit/', 'post')) {
 }
 
 /* Remove serie */
-elseif (new_route('/DDWT18/week1/remove/', 'post')) {
+elseif (new_route('/ddwt18/week1/remove/', 'post')) {
     /* Remove serie in database */
     $serie_id = $_POST['serie_id'];
     $feedback = remove_serie($db, $serie_id);
@@ -230,14 +230,14 @@ elseif (new_route('/DDWT18/week1/remove/', 'post')) {
     /* Page info */
     $page_title = 'Overview';
     $breadcrumbs = get_breadcrumbs([
-        'DDWT18' => na('/DDWT18/', False),
-        'Week 1' => na('/DDWT18/week1/', False),
-        'Overview' => na('/DDWT18/week1/overview', True)
+        'ddwt18' => na('/ddwt18/', False),
+        'Week 1' => na('/ddwt18/week1/', False),
+        'Overview' => na('/ddwt18/week1/overview', True)
     ]);
     $navigation = get_navigation([
-        'Home' => na('/DDWT18/week1/', False),
-        'Overview' => na('/DDWT18/week1/overview', True),
-        'Add Series' => na('/DDWT18/week1/add/', False)
+        'Home' => na('/ddwt18/week1/', False),
+        'Overview' => na('/ddwt18/week1/overview', True),
+        'Add Series' => na('/ddwt18/week1/add/', False)
     ]);
 
     /* Page content */
@@ -255,12 +255,12 @@ elseif (new_route('/DDWT18/week1/remove/', 'post')) {
         <tbody>
         <tr>
             <th scope="row">House of Cards</th>
-            <td><a href="/DDWT18/week1/serie/" role="button" class="btn btn-primary">More info</a></td>
+            <td><a href="/ddwt18/week1/serie/" role="button" class="btn btn-primary">More info</a></td>
         </tr>
 
         <tr>
             <th scope="row">Game of Thrones</th>
-            <td><a href="/DDWT18/week1/serie/" role="button" class="btn btn-primary">More info</a></td>
+            <td><a href="/ddwt18/week1/serie/" role="button" class="btn btn-primary">More info</a></td>
         </tr>
 
         </tbody>
