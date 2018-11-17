@@ -1,6 +1,4 @@
 <!-- Series count -->
-
-
 <div class="card">
     <div class="card-header">
         Series

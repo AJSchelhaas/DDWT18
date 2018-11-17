@@ -151,3 +151,55 @@ function count_series($pdo) {
     $series_count = $stmt->rowCount();
     return $series_count;
 }
+
+/**
+ * @param PDO
+ */
+function get_series($pdo){
+    $stmt = $pdo->prepare('SELECT * FROM series');
+    $stmt->execute();
+    $series = $stmt->fetchAll();
+    $series_exp = Array();
+
+    /* Create array with htmlspecialchars */
+    foreach ($series as $key => $value) {
+        foreach ($value as $user_key => $user_input) {
+            $series_exp[$key][$user_key] = htmlspecialchars($user_input);
+        }
+    }
+
+    return $series_exp;
+}
+
+function get_series_table($series_exp) {
+    $series_table = '
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th scope="col">Series</th>
+            <th scope="col"></th>
+        </tr>
+        </thead>
+        <tbody>';
+    foreach ($series_exp as $key => $value){
+        $series_table .= '
+        <tr>
+            <th scope="row">'.$value['name'].'</th>
+            <td><a href="/ddwt18/week1/serie/?series_id='.$value['id'].'" role="button" class="btn btn-primary">More info</a></td>
+        </tr>';
+    }
+    $series_table .= '
+        </tbody>
+    </table>';
+    return $series_table;
+}
+
+function get_series_info($pdo, $series_id) {
+    $series_id_string = strval($series_id);
+    $stmt = $pdo->prepare('SELECT * FROM series WHERE id = '.$series_id_string);
+    $stmt->execute();
+    $series = $stmt->fetchAll();
+    $series_array_key = $series[0];
+
+    return $series_array_key;
+}
