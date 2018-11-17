@@ -121,11 +121,12 @@ function get_error($feedback){
 }
 
 /**
+ * Connects to database
  * @param string host
  * @param string database
  * @param string username
  * @param string password
- * @return PDO
+ * @return pdo
  */
 function connect_db($host, $db, $user, $pass){
     $charset = 'utf8mb4';
@@ -143,7 +144,9 @@ function connect_db($host, $db, $user, $pass){
 }
 
 /**
+ * Returns the amount of series in the database
  * @param PDO
+ * @return array series_count
  */
 function count_series($pdo) {
     $stmt = $pdo->prepare('SELECT * FROM series');
@@ -153,7 +156,9 @@ function count_series($pdo) {
 }
 
 /**
- * @param PDO
+ * Returns array with series information without special characters
+ * @param pdo
+ * @return array series_exp
  */
 function get_series($pdo){
     $stmt = $pdo->prepare('SELECT * FROM series');
@@ -171,7 +176,13 @@ function get_series($pdo){
     return $series_exp;
 }
 
+/**
+ * Returns string with series information in HTML format
+ * @param array series_exp
+ * @return string series_table
+ */
 function get_series_table($series_exp) {
+    /* Adding the title */
     $series_table = '
     <table class="table table-hover">
         <thead>
@@ -181,6 +192,8 @@ function get_series_table($series_exp) {
         </tr>
         </thead>
         <tbody>';
+
+    /* creates table for each series */
     foreach ($series_exp as $key => $value){
         $series_table .= '
         <tr>
@@ -191,15 +204,27 @@ function get_series_table($series_exp) {
     $series_table .= '
         </tbody>
     </table>';
+
     return $series_table;
 }
 
+/**
+ * Returns an associative array with for the series id provided
+ * @param pdo
+ * @param array series_id
+ * @return string series_array_key
+ */
 function get_series_info($pdo, $series_id) {
     $series_id_string = strval($series_id);
     $stmt = $pdo->prepare('SELECT * FROM series WHERE id = '.$series_id_string);
     $stmt->execute();
     $series = $stmt->fetchAll();
     $series_array_key = $series[0];
+
+    /* Create array with htmlspecialchars */
+    foreach ($series_array_key as $key => $value) {
+        $series_array_key[$key] = htmlspecialchars($value);
+    }
 
     return $series_array_key;
 }
