@@ -73,7 +73,7 @@ function get_breadcrumbs($breadcrumbs) {
  */
 function get_navigation($navigation){
     $navigation_exp = '<nav class="navbar navbar-expand-lg navbar-light bg-light">';
-    $navigation_exp .= '<a class="navbar-brand">Series Overview</a>';
+    $navigation_exp .= '<a class="navbar-brand">Serious Series</a>';
     $navigation_exp .= '<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">';
     $navigation_exp .= '<span class="navbar-toggler-icon"></span>';
     $navigation_exp .= '</button>';
@@ -231,6 +231,12 @@ function get_series_info($pdo, $series_id) {
     return $series_array_key;
 }
 
+/**
+ * Adds a series to the database
+ * @param pdo
+ * @param array series_info
+ * @return array feedback
+ */
 function add_series($pdo, $serie_info) {
     /* Check data type */
     if (!is_numeric($serie_info['Seasons'])) {
@@ -293,6 +299,12 @@ function add_series($pdo, $serie_info) {
     }
 }
 
+/**
+ * Updatse a series in the database if the name already exists
+ * @param pdo
+ * @param array post information
+ * @return array feedback
+ */
 function update_series($pdo, $post) {
     $serie_info = $post;
     /* Check data type */
@@ -323,6 +335,24 @@ function update_series($pdo, $post) {
     $series_abstract = $serie_info['Abstract'];
     $series_id = $serie_info['SeriesId'];
 
+    /* Check whether name is already in the database */
+    $stmt = $pdo->prepare('SELECT id, name FROM series');
+    $stmt->execute();
+    $series = $stmt->fetchAll();
+
+    $name_exists = false;
+    foreach ($series as $key => $value) {
+        if ($value['name'] == $series_name) {
+            $name_exists = true;
+        }
+    }
+
+    if (!$name_exists) {
+        return [
+            'type' => 'danger',
+            'message' => sprintf("Series '%s' can not be updated because it does not exist.", $serie_info['Name'])
+        ];
+    }
 
     /* Update serie */
     $stmt = $pdo->prepare('UPDATE series SET name = :name, creator = :creator, seasons = :seasons, abstract = :abstract
@@ -333,17 +363,36 @@ function update_series($pdo, $post) {
     $stmt-> bindParam(':abstract', $series_abstract);
     $stmt-> bindParam(':id', $series_id);
     $stmt->execute();
-    $inserted = $stmt->rowCount();
-    if ($inserted == 1) {
+
+    return [
+        'type' => 'success',
+        'message' => sprintf("Series '%s' has been updated.", $serie_info['Name'])
+    ];
+}
+
+/**
+ * Removes a series from the database
+ * @param pdo
+ * @param string series_id
+ * @return array feedback
+ */
+function remove_serie($pdo, $serie_id) {
+    /* Get series info */
+    $serie_info = get_series_info($pdo, $serie_id);
+    /* Delete Serie */
+    $stmt = $pdo->prepare("DELETE FROM series WHERE id = ?");
+    $stmt->execute([$serie_id]);
+    $deleted = $stmt->rowCount();
+    if ($deleted == 1) {
         return [
             'type' => 'success',
-            'message' => sprintf("Series '%s' added to Series Overview.", $serie_info['Name'])
+            'message' => sprintf("Series '%s' was removed!", $serie_info['name'])
         ];
     }
     else {
         return [
-            'type' => 'danger',
-            'message' => 'There was an error. The series was not added. Try it again.'
+            'type' => 'warning',
+            'message' => 'An error occurred. The series was not removed.'
         ];
     }
 }

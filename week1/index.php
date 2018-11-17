@@ -8,7 +8,8 @@
 
 include 'model.php';
 
-$pdo = connect_db('localhost', 'ddwt18_week1', 'ddwt18', 'ddwt18');
+/* create databse connection */
+$db = connect_db('localhost', 'ddwt18_week1', 'ddwt18', 'ddwt18');
 
 /* Landing page */
 if (new_route('/ddwt18/week1/', 'get')) {
@@ -28,7 +29,7 @@ if (new_route('/ddwt18/week1/', 'get')) {
     /* Page content */
     $right_column = use_template('cards');
     $page_subtitle = 'The online platform to list your favorite series';
-    $page_content = 'On Series Overview you can list your favorite series. You can see the favorite series of all Series Overview users. By sharing your favorite series, you can get inspired by others and explore new series.';
+    $page_content = 'On Serious Series you can list your favorite series. You can see the favorite series of all Series Overview users. By sharing your favorite series, you can get inspired by others and explore new series.';
 
     /* Choose Template */
     include use_template('main');
@@ -52,8 +53,8 @@ elseif (new_route('/ddwt18/week1/overview/', 'get')) {
     /* Page content */
     $right_column = use_template('cards');
     $page_subtitle = 'The overview of all series';
-    $page_content = 'Here you find all series listed on Series Overview.';
-    $left_content = get_series_table(get_series($pdo));
+    $page_content = 'Here you find all series listed on Series Series.';
+    $left_content = get_series_table(get_series($db));
 
     /* Choose Template */
     include use_template('main');
@@ -63,7 +64,7 @@ elseif (new_route('/ddwt18/week1/overview/', 'get')) {
 elseif (new_route('/ddwt18/week1/serie/', 'get')) {
     /* Get series from db */
     $series_id = $_GET['series_id'];
-    $series_info = get_series_info($pdo, $series_id);
+    $series_info = get_series_info($db, $series_id);
     $serie_name = $series_info['name'];
     $serie_abstract = $series_info['abstract'];
     $nbr_seasons = $series_info['seasons'];
@@ -122,7 +123,7 @@ elseif (new_route('/ddwt18/week1/add/', 'get')) {
 elseif (new_route('/ddwt18/week1/add/', 'post')) {
     /* Retrieve POST information and add series to database */
     $series_post = $_POST;
-    $feedback = add_series($pdo, $series_post);
+    $feedback = add_series($db, $series_post);
     $error_msg = get_error($feedback);
 
     /* Page info */
@@ -152,7 +153,7 @@ elseif (new_route('/ddwt18/week1/add/', 'post')) {
 elseif (new_route('/ddwt18/week1/edit/', 'get')) {
     /* Get serie info from db */
     $series_id = $_GET['series_id'];
-    $series_info = get_series_info($pdo, $series_id);
+    $series_info = get_series_info($db, $series_id);
     $series_name = $series_info['name'];
 
     /* Page info */
@@ -182,11 +183,12 @@ elseif (new_route('/ddwt18/week1/edit/', 'get')) {
 /* Edit serie POST */
 elseif (new_route('/ddwt18/week1/edit/', 'post')) {
     /* Update db */
-    update_series($pdo, $_POST);
+    $feedback = update_series($db, $_POST);
+    $error_msg = get_error($feedback);
 
     /* Get serie info from db */
     $series_id = $_POST['SeriesId'];
-    $series_info = get_series_info($pdo, $series_id);
+    $series_info = get_series_info($db, $series_id);
     $series_name = $series_info['name'];
     $series_abstract = $series_info['abstract'];
     $nbr_seasons = $series_info['seasons'];
@@ -238,8 +240,8 @@ elseif (new_route('/ddwt18/week1/remove/', 'post')) {
     /* Page content */
     $right_column = use_template('cards');
     $page_subtitle = 'The overview of all series';
-    $page_content = 'Here you find all series listed on Series Overview.';
-    $left_content = get_series_table(get_series($pdo));
+    $page_content = 'Here you find all series listed on Serious Series.';
+    $left_content = get_series_table(get_series($db));
 
     /* Choose Template */
     include use_template('main');
