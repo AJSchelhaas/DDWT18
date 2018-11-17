@@ -62,12 +62,12 @@ elseif (new_route('/ddwt18/week1/overview/', 'get')) {
 /* Single Serie */
 elseif (new_route('/ddwt18/week1/serie/', 'get')) {
     /* Get series from db */
-    $serie_id = $_GET['series_id'];
-    $serie_array_key = get_series_info($pdo, $serie_id);
-    $serie_name = $serie_array_key['name'];
-    $serie_abstract = $serie_array_key['abstract'];
-    $nbr_seasons = $serie_array_key['seasons'];
-    $creators = $serie_array_key['creator'];
+    $series_id = $_GET['series_id'];
+    $series_info = get_series_info($pdo, $series_id);
+    $serie_name = $series_info['name'];
+    $serie_abstract = $series_info['abstract'];
+    $nbr_seasons = $series_info['seasons'];
+    $creators = $series_info['creator'];
 
     /* Page info */
     $page_title = $serie_name;
@@ -120,8 +120,9 @@ elseif (new_route('/ddwt18/week1/add/', 'get')) {
 
 /* Add serie POST */
 elseif (new_route('/ddwt18/week1/add/', 'post')) {
-    $serie_add_info = $_POST;
-    $feedback = add_series($pdo, $serie_add_info);
+    /* Retrieve POST information and add series to database */
+    $series_post = $_POST;
+    $feedback = add_series($pdo, $series_post);
     $error_msg = get_error($feedback);
 
     /* Page info */
@@ -150,17 +151,16 @@ elseif (new_route('/ddwt18/week1/add/', 'post')) {
 /* Edit serie GET */
 elseif (new_route('/ddwt18/week1/edit/', 'get')) {
     /* Get serie info from db */
-    $serie_name = 'House of Cards';
-    $serie_abstract = 'A Congressman works with his equally conniving wife to exact revenge on the people who betrayed him.';
-    $nbr_seasons = '6';
-    $creators = 'Beau Willimon';
+    $series_id = $_GET['series_id'];
+    $series_info = get_series_info($pdo, $series_id);
+    $series_name = $series_info['name'];
 
     /* Page info */
     $page_title = 'Edit Series';
     $breadcrumbs = get_breadcrumbs([
         'ddwt18' => na('/ddwt18/', False),
         'Week 1' => na('/ddwt18/week1/', False),
-        sprintf("Edit Series %s", $serie_name) => na('/ddwt18/week1/new/', True)
+        sprintf("Edit Series %s", $series_name) => na('/ddwt18/week1/new/', True)
     ]);
     $navigation = get_navigation([
         'Home' => na('/ddwt18/week1/', False),
@@ -170,8 +170,10 @@ elseif (new_route('/ddwt18/week1/edit/', 'get')) {
 
     /* Page content */
     $right_column = use_template('cards');
-    $page_subtitle = sprintf("Edit %s", $serie_name);
+    $page_subtitle = sprintf("Edit %s", $series_name);
     $page_content = 'Edit the series below.';
+    $submit_btn = 'Edit series';
+    $form_action = '/ddwt18/week1/edit/';
 
     /* Choose Template */
     include use_template('new');
@@ -179,19 +181,24 @@ elseif (new_route('/ddwt18/week1/edit/', 'get')) {
 
 /* Edit serie POST */
 elseif (new_route('/ddwt18/week1/edit/', 'post')) {
+    /* Update db */
+    update_series($pdo, $_POST);
+
     /* Get serie info from db */
-    $serie_name = 'House of Cards';
-    $serie_abstract = 'A Congressman works with his equally conniving wife to exact revenge on the people who betrayed him.';
-    $nbr_seasons = '6';
-    $creators = 'Beau Willimon';
+    $series_id = $_POST['SeriesId'];
+    $series_info = get_series_info($pdo, $series_id);
+    $series_name = $series_info['name'];
+    $series_abstract = $series_info['abstract'];
+    $nbr_seasons = $series_info['seasons'];
+    $creators = $series_info['creator'];
 
     /* Page info */
-    $page_title = $serie_info['name'];
+    $page_title = $series_info['name'];
     $breadcrumbs = get_breadcrumbs([
         'ddwt18' => na('/ddwt18/', False),
         'Week 1' => na('/ddwt18/week1/', False),
         'Overview' => na('/ddwt18/week1/overview/', False),
-        $serie_name => na('/ddwt18/week1/serie/', True)
+        $series_name => na('/ddwt18/week1/serie/', True)
     ]);
     $navigation = get_navigation([
         'Home' => na('/ddwt18/week1/', False),
@@ -201,8 +208,8 @@ elseif (new_route('/ddwt18/week1/edit/', 'post')) {
 
     /* Page content */
     $right_column = use_template('cards');
-    $page_subtitle = sprintf("Information about %s", $serie_name);
-    $page_content = $serie_info['abstract'];
+    $page_subtitle = sprintf("Information about %s", $series_name);
+    $page_content = $series_info['abstract'];
 
     /* Choose Template */
     include use_template('serie');
@@ -211,8 +218,8 @@ elseif (new_route('/ddwt18/week1/edit/', 'post')) {
 /* Remove serie */
 elseif (new_route('/ddwt18/week1/remove/', 'post')) {
     /* Remove serie in database */
-    $serie_id = $_POST['serie_id'];
-    $feedback = remove_serie($db, $serie_id);
+    $series_id = $_POST['series_id'];
+    $feedback = remove_serie($db, $series_id);
     $error_msg = get_error($feedback);
 
     /* Page info */

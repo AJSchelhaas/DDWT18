@@ -39,7 +39,7 @@
                             <label for="inputName" class="col-sm-2 col-formlabel">Name</label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" id="inputName"
-                                       name="Name" required>
+                                       name="Name" required value="<?php if (isset($series_info)){echo $series_info['name'];} ?>">
                             </div>
                         </div>
 
@@ -47,7 +47,7 @@
                             <label for="inputName" class="col-sm-2 col-formlabel">Creator</label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" id="inputCreator"
-                                       name="Creator" required>
+                                       name="Creator" required value="<?php if (isset($series_info)){echo $series_info['creator'];} ?>">
                             </div>
                         </div>
 
@@ -55,22 +55,27 @@
                             <label for="inputName" class="col-sm-2 col-formlabel">Seasons</label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" id="inputSeasons"
-                                       name="Seasons" required>
+                                       name="Seasons" required value="<?php if (isset($series_info)){echo $series_info['seasons'];} ?>">
                             </div>
                         </div>
 
                         <div class="form-group row">
                             <label for="inputName" class="col-sm-2 col-formlabel">Abstract</label>
                             <div class="col-sm-10">
-                                <textarea type="text" class="form-control" id="inputAbstract"
-                                          name="Abstract" required></textarea>
+                                <input type="text" class="form-control" id="inputAbstract"
+                                          name="Abstract" required value="<?php if (isset($series_info)){echo $series_info['abstract'];} ?>">
                             </div>
                         </div>
+                        <?php if ($form_action == '/ddwt18/week1/edit/') {
+                            echo '<input type="hidden" class="form-control" id="inputSeriesId"
+                                          name="SeriesId" required value="';
+                            if (isset($series_info)){echo $series_info["id"];};
+                            echo '"/>';
+                        }?>
 
                         <div class="form-group row">
                             <div class="col-sm-10">
-                                <button type="submit" class="btn btn-primary"><?=
-                                    $submit_btn ?></button>
+                                <button type="submit" class="btn btn-primary"><?= $submit_btn ?></button>
                             </div>
                         </div>
                     </form>

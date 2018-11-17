@@ -215,6 +215,7 @@ function get_series_table($series_exp) {
  * @return string series_array_key
  */
 function get_series_info($pdo, $series_id) {
+    /* Retrieves series information from database */
     $series_id_string = strval($series_id);
     $stmt = $pdo->prepare('SELECT * FROM series WHERE id = '.$series_id_string);
     $stmt->execute();
@@ -226,11 +227,11 @@ function get_series_info($pdo, $series_id) {
         $series_array_key[$key] = htmlspecialchars($value);
     }
 
+    /* Returns associative array */
     return $series_array_key;
 }
 
-function add_series($pdo, $post) {
-    $serie_info = $post;
+function add_series($pdo, $serie_info) {
     /* Check data type */
     if (!is_numeric($serie_info['Seasons'])) {
         return [
@@ -270,13 +271,68 @@ function add_series($pdo, $post) {
     $primary_key = intval($max_array_id[0]['MAX(id)']) + 1;
 
     /* Add Serie */
-    $stmt = $pdo->prepare("INSERT INTO series (name, creator, seasons, abstract) VALUES (?, ?, ?, ?)");
+    $stmt = $pdo->prepare('INSERT INTO series (name, creator, seasons, abstract) VALUES (?, ?, ?, ?)');
     $stmt->execute([
         $serie_info['Name'],
         $serie_info['Creator'],
         $serie_info['Seasons'],
         $serie_info['Abstract']
     ]);
+    $inserted = $stmt->rowCount();
+    if ($inserted == 1) {
+        return [
+            'type' => 'success',
+            'message' => sprintf("Series '%s' added to Series Overview.", $serie_info['Name'])
+        ];
+    }
+    else {
+        return [
+            'type' => 'danger',
+            'message' => 'There was an error. The series was not added. Try it again.'
+        ];
+    }
+}
+
+function update_series($pdo, $post) {
+    $serie_info = $post;
+    /* Check data type */
+    if (!is_numeric($serie_info['Seasons'])) {
+        return [
+            'type' => 'danger',
+            'message' => 'There was an error. You should enter a number in the field Seasons.'
+        ];
+    }
+
+    /* Check if all fields are set */
+    if (
+        empty($serie_info['Name']) or
+        empty($serie_info['Creator']) or
+        empty($serie_info['Seasons']) or
+        empty($serie_info['Abstract'])
+    ) {
+        return [
+            'type' => 'danger',
+            'message' => 'There was an error. Not all fields were filled in.'
+        ];
+    }
+
+    /* Create variables for update */
+    $series_name = $serie_info['Name'];
+    $series_creator = $serie_info['Creator'];
+    $series_seasons = $serie_info['Seasons'];
+    $series_abstract = $serie_info['Abstract'];
+    $series_id = $serie_info['SeriesId'];
+
+
+    /* Update serie */
+    $stmt = $pdo->prepare('UPDATE series SET name = :name, creator = :creator, seasons = :seasons, abstract = :abstract
+    WHERE id = :id');
+    $stmt-> bindParam(':name', $series_name);
+    $stmt-> bindParam(':creator', $series_creator);
+    $stmt-> bindParam(':seasons', $series_seasons);
+    $stmt-> bindParam(':abstract', $series_abstract);
+    $stmt-> bindParam(':id', $series_id);
+    $stmt->execute();
     $inserted = $stmt->rowCount();
     if ($inserted == 1) {
         return [
