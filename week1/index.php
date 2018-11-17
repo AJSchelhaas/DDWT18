@@ -120,6 +120,10 @@ elseif (new_route('/ddwt18/week1/add/', 'get')) {
 
 /* Add serie POST */
 elseif (new_route('/ddwt18/week1/add/', 'post')) {
+    $serie_add_info = $_POST;
+    $feedback = add_series($pdo, $serie_add_info);
+    $error_msg = get_error($feedback);
+
     /* Page info */
     $page_title = 'Add Series';
     $breadcrumbs = get_breadcrumbs([

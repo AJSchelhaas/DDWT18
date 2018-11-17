@@ -34,7 +34,7 @@
                     <h5><?= $page_subtitle ?></h5>
                     <p><?= $page_content ?></p>
                     <!-- Put your form here -->
-                    <form action=<? echo $form_action ?> method="post" >
+                    <form method="post" action=<? echo $form_action ?>>
                         <div class="form-group row">
                             <label for="inputName" class="col-sm-2 col-formlabel">Name</label>
                             <div class="col-sm-10">
