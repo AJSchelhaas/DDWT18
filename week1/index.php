@@ -53,7 +53,7 @@ elseif (new_route('/ddwt18/week1/overview/', 'get')) {
     /* Page content */
     $right_column = use_template('cards');
     $page_subtitle = 'The overview of all series';
-    $page_content = 'Here you find all series listed on Series Series.';
+    $page_content = 'Here you find all series listed on Serious Series.';
     $left_content = get_series_table(get_series($db));
 
     /* Choose Template */
