@@ -288,7 +288,7 @@ function add_series($pdo, $serie_info) {
     if ($inserted == 1) {
         return [
             'type' => 'success',
-            'message' => sprintf("Series '%s' added to Series Overview.", $serie_info['Name'])
+            'message' => sprintf("Series '%s' added to Serious Series.", $serie_info['Name'])
         ];
     }
     else {
@@ -300,7 +300,7 @@ function add_series($pdo, $serie_info) {
 }
 
 /**
- * Updatse a series in the database if the name already exists
+ * Updates a series in the database if the name already exists
  * @param pdo
  * @param array post information
  * @return array feedback
@@ -335,6 +335,8 @@ function update_series($pdo, $post) {
     $series_abstract = $serie_info['Abstract'];
     $series_id = $serie_info['SeriesId'];
 
+    $series_current_name = get_series_info($pdo, $series_id)['name'];
+
     /* Check whether name is already in the database */
     $stmt = $pdo->prepare('SELECT id, name FROM series');
     $stmt->execute();
@@ -342,15 +344,15 @@ function update_series($pdo, $post) {
 
     $name_exists = false;
     foreach ($series as $key => $value) {
-        if ($value['name'] == $series_name) {
+        if ($value['name'] != $series_current_name and $value['name'] == $series_name) {
             $name_exists = true;
         }
     }
 
-    if (!$name_exists) {
+    if ($name_exists) {
         return [
             'type' => 'danger',
-            'message' => sprintf("Series '%s' can not be updated because it does not exist.", $serie_info['Name'])
+            'message' => sprintf("Series '%s' can not be updated because that name already exists.", $serie_info['Name'])
         ];
     }
 

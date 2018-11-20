@@ -29,7 +29,7 @@ if (new_route('/ddwt18/week1/', 'get')) {
     /* Page content */
     $right_column = use_template('cards');
     $page_subtitle = 'The online platform to list your favorite series';
-    $page_content = 'On Serious Series you can list your favorite series. You can see the favorite series of all Series Overview users. By sharing your favorite series, you can get inspired by others and explore new series.';
+    $page_content = 'On Serious Series you can list your favorite series. You can see the favorite series of all Serious Series users. By sharing your favorite series, you can get inspired by others and explore new series.';
 
     /* Choose Template */
     include use_template('main');
