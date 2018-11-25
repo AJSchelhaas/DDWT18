@@ -111,6 +111,8 @@ elseif (new_route('/ddwt18/week2/serie/', 'get')) {
     $nbr_seasons = $serie_info['seasons'];
     $creators = $serie_info['creator'];
 
+    $added_by = get_user_name($db, $serie_info['user']);
+
     /* Choose Template */
     include use_template('serie');
 }
