@@ -19,6 +19,9 @@ $db = connect_db('localhost', 'ddwt18_week2', 'ddwt18','ddwt18');
 /* Get Number of Series */
 $nbr_series = count_series($db);
 
+/* Get Number of Users */
+$nbr_users = count_users($db);
+
 /* Set 'cards' as default for right column*/
 $right_column = use_template('cards');
 

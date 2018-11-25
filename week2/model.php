@@ -94,7 +94,8 @@ function get_breadcrumbs($breadcrumbs) {
 
 /**
  * Creates navigation HTML code using given array
- * @param array $navigation Array with as Key the page name and as Value the corresponding url
+ * @param array $template Array with as Key the page name and as Value the corresponding url
+ * @param string $active_id String with name of current active page
  * @return string html code that represents the navigation
  */
 function get_navigation($template ,$active_id){
@@ -391,6 +392,19 @@ function count_series($pdo){
     $stmt->execute();
     $series = $stmt->rowCount();
     return $series;
+}
+
+/**
+ * Count the number of active users (sessions)
+ * @return integer
+ */
+function count_users($pdo){
+    /* Get active user amount */
+    /* Get series */
+    $stmt = $pdo->prepare('SELECT DISTINCT * FROM users');
+    $stmt->execute();
+    $user_count = $stmt->rowCount();
+    return $user_count;
 }
 
 /**
