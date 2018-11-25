@@ -9,7 +9,7 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
         <!-- Own CSS -->
-        <link rel="stylesheet" href="/DDWT18/week2/css/main.css">
+        <link rel="stylesheet" href="/ddwt18/week2/css/main.css">
 
         <title><?= $page_title ?></title>
     </head>
@@ -47,7 +47,7 @@
                         </div>
                         <div class="card-body">
                             <p>You're logged in to Series Overview.</p>
-                            <a href="/DDWT18/week2/logout/" class="btn btn-primary">Logout</a>
+                            <a href="/ddwt18/week2/logout/" class="btn btn-primary">Logout</a>
                         </div>
                     </div>
                 </div>
@@ -59,7 +59,7 @@
                         </div>
                         <div class="card-body">
                             <p>Add your contribution to Series Overview.</p>
-                            <a href="/DDWT18/week2/add/" class="btn btn-primary">Add a series</a>
+                            <a href="/ddwt18/week2/add/" class="btn btn-primary">Add a series</a>
                         </div>
                     </div>
                 </div>

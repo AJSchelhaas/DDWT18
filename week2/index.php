@@ -12,23 +12,23 @@ include 'model.php';
 $db = connect_db('localhost', 'ddwt18_week2', 'ddwt18','ddwt18');
 
 /* Landing page */
-if (new_route('/DDWT18/week2/', 'get')) {
+if (new_route('/ddwt18/week2/', 'get')) {
     /* Get Number of Series */
     $nbr_series = count_series($db);
 
     /* Page info */
     $page_title = 'Home';
     $breadcrumbs = get_breadcrumbs([
-        'DDWT18' => na('/DDWT18/', False),
-        'Week 2' => na('/DDWT18/week2/', False),
-        'Home' => na('/DDWT18/week2/', True)
+        'ddwt18' => na('/ddwt18/', False),
+        'Week 2' => na('/ddwt18/week2/', False),
+        'Home' => na('/ddwt18/week2/', True)
     ]);
     $navigation = get_navigation([
-        'Home' => na('/DDWT18/week2/', True),
-        'Overview' => na('/DDWT18/week2/overview/', False),
-        'Add series' => na('/DDWT18/week2/add/', False),
-        'My Account' => na('/DDWT18/week2/myaccount/', False),
-        'Registration' => na('/DDWT18/week2/register/', False)
+        'Home' => na('/ddwt18/week2/', True),
+        'Overview' => na('/ddwt18/week2/overview/', False),
+        'Add series' => na('/ddwt18/week2/add/', False),
+        'My Account' => na('/ddwt18/week2/myaccount/', False),
+        'Registration' => na('/ddwt18/week2/register/', False)
     ]);
 
     /* Page content */
@@ -41,23 +41,23 @@ if (new_route('/DDWT18/week2/', 'get')) {
 }
 
 /* Overview page */
-elseif (new_route('/DDWT18/week2/overview/', 'get')) {
+elseif (new_route('/ddwt18/week2/overview/', 'get')) {
     /* Get Number of Series */
     $nbr_series = count_series($db);
 
     /* Page info */
     $page_title = 'Overview';
     $breadcrumbs = get_breadcrumbs([
-        'DDWT18' => na('/DDWT18/', False),
-        'Week 2' => na('/DDWT18/week2/', False),
-        'Overview' => na('/DDWT18/week2/overview', True)
+        'ddwt18' => na('/ddwt18/', False),
+        'Week 2' => na('/ddwt18/week2/', False),
+        'Overview' => na('/ddwt18/week2/overview', True)
     ]);
     $navigation = get_navigation([
-        'Home' => na('/DDWT18/week2/', False),
-        'Overview' => na('/DDWT18/week2/overview', True),
-        'Add series' => na('/DDWT18/week2/add/', False),
-        'My Account' => na('/DDWT18/week2/myaccount/', False),
-        'Registration' => na('/DDWT18/week2/register/', False)
+        'Home' => na('/ddwt18/week2/', False),
+        'Overview' => na('/ddwt18/week2/overview', True),
+        'Add series' => na('/ddwt18/week2/add/', False),
+        'My Account' => na('/ddwt18/week2/myaccount/', False),
+        'Registration' => na('/ddwt18/week2/register/', False)
     ]);
 
     /* Page content */
@@ -71,7 +71,7 @@ elseif (new_route('/DDWT18/week2/overview/', 'get')) {
 }
 
 /* Single Serie */
-elseif (new_route('/DDWT18/week2/serie/', 'get')) {
+elseif (new_route('/ddwt18/week2/serie/', 'get')) {
     /* Get Number of Series */
     $nbr_series = count_series($db);
 
@@ -82,17 +82,17 @@ elseif (new_route('/DDWT18/week2/serie/', 'get')) {
     /* Page info */
     $page_title = $serie_info['name'];
     $breadcrumbs = get_breadcrumbs([
-        'DDWT18' => na('/DDWT18/', False),
-        'Week 2' => na('/DDWT18/week2/', False),
-        'Overview' => na('/DDWT18/week2/overview/', False),
-        $serie_info['name'] => na('/DDWT18/week2/serie/?serie_id='.$serie_id, True)
+        'ddwt18' => na('/ddwt18/', False),
+        'Week 2' => na('/ddwt18/week2/', False),
+        'Overview' => na('/ddwt18/week2/overview/', False),
+        $serie_info['name'] => na('/ddwt18/week2/serie/?serie_id='.$serie_id, True)
     ]);
     $navigation = get_navigation([
-        'Home' => na('/DDWT18/week2/', False),
-        'Overview' => na('/DDWT18/week2/overview', True),
-        'Add series' => na('/DDWT18/week2/add/', False),
-        'My Account' => na('/DDWT18/week2/myaccount/', False),
-        'Registration' => na('/DDWT18/week2/register/', False)
+        'Home' => na('/ddwt18/week2/', False),
+        'Overview' => na('/ddwt18/week2/overview', True),
+        'Add series' => na('/ddwt18/week2/add/', False),
+        'My Account' => na('/ddwt18/week2/myaccount/', False),
+        'Registration' => na('/ddwt18/week2/register/', False)
     ]);
 
     /* Page content */
@@ -107,23 +107,23 @@ elseif (new_route('/DDWT18/week2/serie/', 'get')) {
 }
 
 /* Add serie GET */
-elseif (new_route('/DDWT18/week2/add/', 'get')) {
+elseif (new_route('/ddwt18/week2/add/', 'get')) {
     /* Get Number of Series */
     $nbr_series = count_series($db);
 
     /* Page info */
     $page_title = 'Add Series';
     $breadcrumbs = get_breadcrumbs([
-        'DDWT18' => na('/DDWT18/', False),
-        'Week 2' => na('/DDWT18/week2/', False),
-        'Add Series' => na('/DDWT18/week2/new/', True)
+        'ddwt18' => na('/ddwt18/', False),
+        'Week 2' => na('/ddwt18/week2/', False),
+        'Add Series' => na('/ddwt18/week2/new/', True)
     ]);
     $navigation = get_navigation([
-        'Home' => na('/DDWT18/week2/', False),
-        'Overview' => na('/DDWT18/week2/overview', False),
-        'Add series' => na('/DDWT18/week2/add/', True),
-        'My Account' => na('/DDWT18/week2/myaccount/', False),
-        'Registration' => na('/DDWT18/week2/register/', False)
+        'Home' => na('/ddwt18/week2/', False),
+        'Overview' => na('/ddwt18/week2/overview', False),
+        'Add series' => na('/ddwt18/week2/add/', True),
+        'My Account' => na('/ddwt18/week2/myaccount/', False),
+        'Registration' => na('/ddwt18/week2/register/', False)
     ]);
 
     /* Page content */
@@ -131,30 +131,30 @@ elseif (new_route('/DDWT18/week2/add/', 'get')) {
     $page_subtitle = 'Add your favorite series';
     $page_content = 'Fill in the details of you favorite series.';
     $submit_btn = "Add Series";
-    $form_action = '/DDWT18/week2/add/';
+    $form_action = '/ddwt18/week2/add/';
 
     /* Choose Template */
     include use_template('new');
 }
 
 /* Add serie POST */
-elseif (new_route('/DDWT18/week2/add/', 'post')) {
+elseif (new_route('/ddwt18/week2/add/', 'post')) {
     /* Get Number of Series */
     $nbr_series = count_series($db);
 
     /* Page info */
     $page_title = 'Add Series';
     $breadcrumbs = get_breadcrumbs([
-        'DDWT18' => na('/DDWT18/', False),
-        'Week 2' => na('/DDWT18/week2/', False),
-        'Add Series' => na('/DDWT18/week2/add/', True)
+        'ddwt18' => na('/ddwt18/', False),
+        'Week 2' => na('/ddwt18/week2/', False),
+        'Add Series' => na('/ddwt18/week2/add/', True)
     ]);
     $navigation = get_navigation([
-        'Home' => na('/DDWT18/week2/', False),
-        'Overview' => na('/DDWT18/week2/overview', False),
-        'Add series' => na('/DDWT18/week2/add/', True),
-        'My Account' => na('/DDWT18/week2/myaccount/', False),
-        'Registration' => na('/DDWT18/week2/register/', False)
+        'Home' => na('/ddwt18/week2/', False),
+        'Overview' => na('/ddwt18/week2/overview', False),
+        'Add series' => na('/ddwt18/week2/add/', True),
+        'My Account' => na('/ddwt18/week2/myaccount/', False),
+        'Registration' => na('/ddwt18/week2/register/', False)
     ]);
 
     /* Page content */
@@ -162,7 +162,7 @@ elseif (new_route('/DDWT18/week2/add/', 'post')) {
     $page_subtitle = 'Add your favorite series';
     $page_content = 'Fill in the details of you favorite series.';
     $submit_btn = "Add Series";
-    $form_action = '/DDWT18/week2/add/';
+    $form_action = '/ddwt18/week2/add/';
 
     /* Add serie to database */
     $feedback = add_serie($db, $_POST);
@@ -172,7 +172,7 @@ elseif (new_route('/DDWT18/week2/add/', 'post')) {
 }
 
 /* Edit serie GET */
-elseif (new_route('/DDWT18/week2/edit/', 'get')) {
+elseif (new_route('/ddwt18/week2/edit/', 'get')) {
     /* Get Number of Series */
     $nbr_series = count_series($db);
 
@@ -183,16 +183,16 @@ elseif (new_route('/DDWT18/week2/edit/', 'get')) {
     /* Page info */
     $page_title = 'Edit Series';
     $breadcrumbs = get_breadcrumbs([
-        'DDWT18' => na('/DDWT18/', False),
-        'Week 2' => na('/DDWT18/week2/', False),
-        sprintf("Edit Series %s", $serie_info['name']) => na('/DDWT18/week2/new/', True)
+        'ddwt18' => na('/ddwt18/', False),
+        'Week 2' => na('/ddwt18/week2/', False),
+        sprintf("Edit Series %s", $serie_info['name']) => na('/ddwt18/week2/new/', True)
     ]);
     $navigation = get_navigation([
-        'Home' => na('/DDWT18/week2/', False),
-        'Overview' => na('/DDWT18/week2/overview', False),
-        'Add series' => na('/DDWT18/week2/add/', False),
-        'My Account' => na('/DDWT18/week2/myaccount/', False),
-        'Registration' => na('/DDWT18/week2/register/', False)
+        'Home' => na('/ddwt18/week2/', False),
+        'Overview' => na('/ddwt18/week2/overview', False),
+        'Add series' => na('/ddwt18/week2/add/', False),
+        'My Account' => na('/ddwt18/week2/myaccount/', False),
+        'Registration' => na('/ddwt18/week2/register/', False)
     ]);
 
     /* Page content */
@@ -200,14 +200,14 @@ elseif (new_route('/DDWT18/week2/edit/', 'get')) {
     $page_subtitle = sprintf("Edit %s", $serie_info['name']);
     $page_content = 'Edit the series below.';
     $submit_btn = "Edit Series";
-    $form_action = '/DDWT18/week2/edit/';
+    $form_action = '/ddwt18/week2/edit/';
 
     /* Choose Template */
     include use_template('new');
 }
 
 /* Edit serie POST */
-elseif (new_route('/DDWT18/week2/edit/', 'post')) {
+elseif (new_route('/ddwt18/week2/edit/', 'post')) {
     /* Get Number of Series */
     $nbr_series = count_series($db);
 
@@ -222,17 +222,17 @@ elseif (new_route('/DDWT18/week2/edit/', 'post')) {
     /* Page info */
     $page_title = $serie_info['name'];
     $breadcrumbs = get_breadcrumbs([
-        'DDWT18' => na('/DDWT18/', False),
-        'Week 2' => na('/DDWT18/week2/', False),
-        'Overview' => na('/DDWT18/week2/overview/', False),
-        $serie_info['name'] => na('/DDWT18/week2/serie/?serie_id='.$serie_id, True)
+        'ddwt18' => na('/ddwt18/', False),
+        'Week 2' => na('/ddwt18/week2/', False),
+        'Overview' => na('/ddwt18/week2/overview/', False),
+        $serie_info['name'] => na('/ddwt18/week2/serie/?serie_id='.$serie_id, True)
     ]);
     $navigation = get_navigation([
-        'Home' => na('/DDWT18/week2/', False),
-        'Overview' => na('/DDWT18/week2/overview', False),
-        'Add series' => na('/DDWT18/week2/add/', False),
-        'My Account' => na('/DDWT18/week2/myaccount/', False),
-        'Registration' => na('/DDWT18/week2/register/', False)
+        'Home' => na('/ddwt18/week2/', False),
+        'Overview' => na('/ddwt18/week2/overview', False),
+        'Add series' => na('/ddwt18/week2/add/', False),
+        'My Account' => na('/ddwt18/week2/myaccount/', False),
+        'Registration' => na('/ddwt18/week2/register/', False)
     ]);
 
     /* Page content */
@@ -247,7 +247,7 @@ elseif (new_route('/DDWT18/week2/edit/', 'post')) {
 }
 
 /* Remove serie */
-elseif (new_route('/DDWT18/week2/remove/', 'post')) {
+elseif (new_route('/ddwt18/week2/remove/', 'post')) {
     /* Get Number of Series */
     $nbr_series = count_series($db);
 
@@ -259,16 +259,16 @@ elseif (new_route('/DDWT18/week2/remove/', 'post')) {
     /* Page info */
     $page_title = 'Overview';
     $breadcrumbs = get_breadcrumbs([
-        'DDWT18' => na('/DDWT18/', False),
-        'Week 2' => na('/DDWT18/week2/', False),
-        'Overview' => na('/DDWT18/week2/overview', True)
+        'ddwt18' => na('/ddwt18/', False),
+        'Week 2' => na('/ddwt18/week2/', False),
+        'Overview' => na('/ddwt18/week2/overview', True)
     ]);
     $navigation = get_navigation([
-        'Home' => na('/DDWT18/week2/', False),
-        'Overview' => na('/DDWT18/week2/overview', True),
-        'Add series' => na('/DDWT18/week2/add/', False),
-        'My Account' => na('/DDWT18/week2/myaccount/', False),
-        'Registration' => na('/DDWT18/week2/register/', False)
+        'Home' => na('/ddwt18/week2/', False),
+        'Overview' => na('/ddwt18/week2/overview', True),
+        'Add series' => na('/ddwt18/week2/add/', False),
+        'My Account' => na('/ddwt18/week2/myaccount/', False),
+        'Registration' => na('/ddwt18/week2/register/', False)
     ]);
 
     /* Page content */

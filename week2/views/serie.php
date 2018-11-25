@@ -9,7 +9,7 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
         <!-- Own CSS -->
-        <link rel="stylesheet" href="/DDWT18/week2/css/main.css">
+        <link rel="stylesheet" href="/ddwt18/week2/css/main.css">
 
         <title><?= $page_title ?></title>
     </head>
@@ -47,10 +47,10 @@
                     </table>
                     <div class="row">
                         <div class="col-sm-2">
-                            <a href="/DDWT18/week2/edit/?serie_id=<?= $serie_id ?>" role="button" class="btn btn-warning">Edit</a>
+                            <a href="/ddwt18/week2/edit/?serie_id=<?= $serie_id ?>" role="button" class="btn btn-warning">Edit</a>
                         </div>
                         <div class="col-sm-2">
-                            <form action="/DDWT18/week2/remove/" method="POST">
+                            <form action="/ddwt18/week2/remove/" method="POST">
                                 <input type="hidden" value="<?= $serie_id ?>" name="serie_id">
                                 <button type="submit" class="btn btn-danger">Remove</button>
                             </form>
