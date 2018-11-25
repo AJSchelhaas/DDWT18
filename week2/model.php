@@ -412,3 +412,17 @@ function get_user_id(){
         return False;
     }
 }
+
+/**
+ * Retrieves first- and lastname of a users id
+ * @param object $pdo db object
+ * @param integer $user_id
+ * @return string
+ */
+function get_user_name($pdo, $user_id) {
+    $stmt = $pdo->prepare('SELECT firstname, lastname FROM users WHERE id = ?');
+    $stmt->execute([$user_id]);
+    $name = $stmt->fetchAll();
+    $name = $name[0];
+    return $name['firstname'].' '.$name['lastname'];
+}
