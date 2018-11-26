@@ -146,7 +146,7 @@ function get_serie_table($pdo, $series){
         <tr>
             <th scope="row">'.$value['name'].'</th>
             <td><a href="/ddwt18/week2/serie/?serie_id='.$value['id'].'" role="button" class="btn btn-primary">More info</a></td>
-            <td> Added by '.get_user_name($pdo, $value['user']).'</td>
+            <td> Added by '.get_username($pdo, $value['user']).'</td>
         </tr>
         ';
     }
@@ -435,10 +435,75 @@ function get_user_id(){
  * @param integer $user_id
  * @return string
  */
-function get_user_name($pdo, $user_id) {
-    $stmt = $pdo->prepare('SELECT firstname, lastname FROM users WHERE id = ?');
+function get_username($pdo, $user_id) {
+    $stmt = $pdo->prepare('SELECT username FROM users WHERE id = ?');
     $stmt->execute([$user_id]);
     $name = $stmt->fetchAll();
     $name = $name[0];
-    return $name['firstname'].' '.$name['lastname'];
+    return $name['username'];
+}
+
+/**
+ * Retrieves first- and lastname of a users id
+ * @param object $pdo db object
+ * @param integer $user_id
+ * @return array
+ */
+function register_user($pdo, $form_data) {
+    /* Check if all fields are set */
+    if (
+        empty($form_data['username']) or
+        empty($form_data['password']) or
+        empty($form_data['firstname']) or
+        empty($form_data['lastname'])
+    ) {
+        return [
+            'type' => 'danger',
+            'message' => 'You should enter a username, password, first- and last name.'
+        ];
+    }
+
+    /* Check if user already exists */
+    try {
+        $stmt = $pdo->prepare('SELECT * FROM users WHERE username = ?');
+        $stmt->execute([$form_data['username']]);
+        $user_exists = $stmt->rowCount();
+    } catch (\PDOException $e) {
+        return [
+            'type' => 'danger',
+            'message' => sprintf('There was an error: %s', $e->getMessage())
+        ];
+    }
+    /* Return error message for existing username */
+    if ( !empty($user_exists) ) {
+        return [
+            'type' => 'danger',
+            'message' => 'The username you entered does already exists!'
+        ];
+    }
+
+    /* Hash password */
+    $password = password_hash($form_data['password'], PASSWORD_DEFAULT);
+    /* Save user to the database */
+    try {
+        $stmt = $pdo->prepare('INSERT INTO users (username, password, firstname, lastname) VALUES (?, ?, ?, ?)');
+        $stmt->execute([$form_data['username'], $password, $form_data['firstname'],
+            $form_data['lastname']]);
+        $user_id = $pdo->lastInsertId();
+    } catch (PDOException $e) {
+        return [
+            'type' => 'danger',
+            'message' => sprintf('There was an error: %s', $e->getMessage())
+        ];
+    }
+
+    /* Login user and redirect */
+    session_start();
+    $_SESSION['user_id'] = $user_id;
+    $feedback = [
+        'type' => 'success',
+        'message' => sprintf('%s, your account was successfully created!', get_username($pdo, $_SESSION['user_id']))
+    ];
+    redirect(sprintf('/ddwt18/week2/myaccount/?error_msg=%s',
+        json_encode($feedback)));
 }

@@ -42,7 +42,11 @@ $template = Array(
     4 => Array(
         'name' => 'Register',
         'url' => '/ddwt18/week2/register/'
-    ));
+    ),
+    5 => Array(
+    'name' => 'Login',
+    'url' => '/ddwt18/week2/login/'
+));
 
 /* Landing page */
 if (new_route('/ddwt18/week2/', 'get')) {
@@ -111,7 +115,7 @@ elseif (new_route('/ddwt18/week2/serie/', 'get')) {
     $nbr_seasons = $serie_info['seasons'];
     $creators = $serie_info['creator'];
 
-    $added_by = get_user_name($db, $serie_info['user']);
+    $added_by = get_username($db, $serie_info['user']);
 
     /* Choose Template */
     include use_template('serie');
@@ -254,9 +258,11 @@ elseif (new_route('/ddwt18/week2/register/', 'get')) {
 
 /* Register POST */
 elseif (new_route('/ddwt18/week2/register/', 'post')) {
-
-    /* Redirect to serie GET route */
-    redirect(sprintf('/ddwt18/week2/register/'));
+    /* Register user */
+    $error_msg = register_user($db, $_POST);
+    /* Redirect to homepage */
+    redirect(sprintf('/ddwt18/week2/register/?error_msg=%s',
+        json_encode($error_msg)));
 }
 
 /* Login GET */
