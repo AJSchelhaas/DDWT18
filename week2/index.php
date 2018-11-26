@@ -60,9 +60,13 @@ if (new_route('/ddwt18/week2/', 'get')) {
     $navigation = get_navigation($template, $page_title);
 
     /* Page content */
-
     $page_subtitle = 'The online platform to list your favorite series';
     $page_content = 'On Series Overview you can list your favorite series. You can see the favorite series of all Series Overview users. By sharing your favorite series, you can get inspired by others and explore new series.';
+
+    /* Get error msg from GET route */
+    if ( isset($_GET['error_msg']) ) {
+        $error_msg = get_error($_GET['error_msg']);
+    }
 
     /* Choose Template */
     include use_template('main');
@@ -84,7 +88,7 @@ elseif (new_route('/ddwt18/week2/overview/', 'get')) {
     $page_content = 'Here you find all series listed on Series Overview.';
     $left_content = get_serie_table($db, get_series($db));
 
-    /* Get error msg from POST route */
+    /* Get error msg from GET route */
     if ( isset($_GET['error_msg']) ) {
         $error_msg = get_error($_GET['error_msg']);
     }
@@ -123,6 +127,11 @@ elseif (new_route('/ddwt18/week2/serie/', 'get')) {
 
 /* Add serie GET */
 elseif (new_route('/ddwt18/week2/add/', 'get')) {
+    /* Check if logged in */
+    if ( !check_login() ) {
+        redirect('/ddwt18/week2/login/');
+    }
+
     /* Page info */
     $page_title = 'Add Series';
     $breadcrumbs = get_breadcrumbs([
@@ -149,6 +158,11 @@ elseif (new_route('/ddwt18/week2/add/', 'get')) {
 
 /* Add serie POST */
 elseif (new_route('/ddwt18/week2/add/', 'post')) {
+    /* Check if logged in */
+    if ( !check_login() ) {
+        redirect('/ddwt18/week2/login/');
+    }
+
     /* Add serie to database */
     $feedback = add_serie($db, $_POST);
     /* Redirect to serie GET route */
@@ -158,6 +172,11 @@ elseif (new_route('/ddwt18/week2/add/', 'post')) {
 
 /* Edit serie GET */
 elseif (new_route('/ddwt18/week2/edit/', 'get')) {
+    /* Check if logged in */
+    if ( !check_login() ) {
+        redirect('/ddwt18/week2/login/');
+    }
+
     /* Get serie info from db */
     $serie_id = $_GET['serie_id'];
     $serie_info = get_serieinfo($db, $serie_id);
@@ -188,6 +207,11 @@ elseif (new_route('/ddwt18/week2/edit/', 'get')) {
 
 /* Edit serie POST */
 elseif (new_route('/ddwt18/week2/edit/', 'post')) {
+    /* Check if logged in */
+    if ( !check_login() ) {
+        redirect('/ddwt18/week2/login/');
+    }
+
     /* Add serie to database */
     $feedback = add_serie($db, $_POST);
     /* Redirect to serie GET route */
@@ -197,6 +221,11 @@ elseif (new_route('/ddwt18/week2/edit/', 'post')) {
 
 /* Remove serie */
 elseif (new_route('/ddwt18/week2/remove/', 'post')) {
+    /* Check if logged in */
+    if ( !check_login() ) {
+        redirect('/ddwt18/week2/login/');
+    }
+
     /* Add serie to database */
     $feedback = add_serie($db, $_POST);
     /* Redirect to serie GET route */
@@ -206,8 +235,14 @@ elseif (new_route('/ddwt18/week2/remove/', 'post')) {
 
 /* My account GET */
 elseif (new_route('/ddwt18/week2/myaccount/', 'get')) {
+    /* Check if logged in */
+    if ( !check_login() ) {
+        redirect('/ddwt18/week2/login/');
+    }
+
     /* Page info */
-    $page_title = 'My account';
+    $user = get_username($db, $_SESSION['user_id']);
+    $page_title = 'My Account';
     $breadcrumbs = get_breadcrumbs([
         'ddwt18' => na('/ddwt18/', False),
         'Week 2' => na('/ddwt18/week2/', False),
@@ -293,16 +328,20 @@ elseif (new_route('/ddwt18/week2/login/', 'get')) {
 
 /* Login POST */
 elseif (new_route('/ddwt18/week2/login/', 'post')) {
-
-    /* Redirect to serie GET route
-    redirect(sprintf('/ddwt18/week2/login/?error_msg=%s',
+    /* Login user */
+    $feedback = login_user($db, $_POST);
+    /* Redirect to login */
+    redirect(sprintf('/sswt18/week2/login/?error_msg=%s',
         json_encode($feedback)));
-    */
 }
 
-/* Logout */
-elseif (new_route('/ddwt18/week2/login/', 'get')) {
-
+/* Logout GET */
+elseif (new_route('/ddwt18/week2/logout/', 'get')) {
+    /* Log out user */
+    $feedback = logout_user();
+    /* Redirect to homepage */
+    redirect(sprintf('/ddwt18/week2/?error_msg=%s',
+        json_encode($feedback)));
 }
 
 else {

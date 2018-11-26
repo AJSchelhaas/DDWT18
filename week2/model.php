@@ -444,9 +444,9 @@ function get_username($pdo, $user_id) {
 }
 
 /**
- * Retrieves first- and lastname of a users id
+ * Registers a user in the database
  * @param object $pdo db object
- * @param integer $user_id
+ * @param array $form_data
  * @return array
  */
 function register_user($pdo, $form_data) {
@@ -506,4 +506,94 @@ function register_user($pdo, $form_data) {
     ];
     redirect(sprintf('/ddwt18/week2/myaccount/?error_msg=%s',
         json_encode($feedback)));
+}
+
+/**
+ * Logs a user into their account
+ * @param object $pdo db object
+ * @param array $form_data
+ * @return array
+ */
+function login_user($pdo, $form_data)
+{
+    /* Check if all fields are set */
+    if (
+        empty($form_data['username']) or
+        empty($form_data['password'])
+    ) {
+        return [
+            'type' => 'danger',
+            'message' => 'You should enter a username and password.'
+        ];
+    }
+
+    /* Check if user exists */
+    try {
+        $stmt = $pdo->prepare('SELECT * FROM users WHERE username = ?');
+        $stmt->execute([$form_data['username']]);
+        $user_info = $stmt->fetch();
+    } catch (\PDOException $e) {
+        return [
+            'type' => 'danger',
+            'message' => sprintf('There was an error: %s', $e->getMessage())
+        ];
+    }
+    /* Return error message for wrong username */
+    if ( empty($user_info) ) {
+        return [
+            'type' => 'danger',
+            'message' => 'The username you entered does not exist!'
+        ];
+    }
+
+    /* Check password */
+    if ( !password_verify($form_data['password'], $user_info['password']) ){
+        return [
+            'type' => 'danger',
+            'message' => 'The password you entered is incorrect!'
+        ];
+    } else {
+        session_start();
+        $_SESSION['user_id'] = $user_info['id'];
+        $feedback = [
+            'type' => 'success',
+            'message' => sprintf('%s, you were logged in successfully!',
+                get_username($pdo, $_SESSION['user_id']))
+        ];
+        redirect(sprintf('/ddwt18/week2/myaccount/?error_msg=%s',
+            json_encode($feedback)));
+    }
+};
+
+/**
+ * Checks whether or not a user is logged in
+ * @return boolean
+ */
+function check_login(){
+    session_start();
+    if (isset($_SESSION['user_id'])){
+        return True;
+    } else {
+        return False;
+    }
+}
+
+/**
+ * Logs out a user
+ * @return array
+ */
+function logout_user() {
+    session_start();
+    if (session_destroy()) {
+        return [
+            'type' => 'success',
+            'message' => sprintf('Succesfully logged out')
+        ];
+    } else {
+        return [
+            'type' => 'danger',
+            'message' => sprintf('Something went wrong while logging out, try again')
+        ];
+    }
+
 }
