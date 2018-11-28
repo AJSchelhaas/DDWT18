@@ -261,12 +261,13 @@ function add_serie($pdo, $serie_info){
     }
 
     /* Add Serie */
-    $stmt = $pdo->prepare("INSERT INTO series (name, creator, seasons, abstract) VALUES (?, ?, ?, ?)");
+    $stmt = $pdo->prepare("INSERT INTO series (name, creator, seasons, abstract, user) VALUES (?, ?, ?, ?, ?)");
     $stmt->execute([
         $serie_info['Name'],
         $serie_info['Creator'],
         $serie_info['Seasons'],
-        $serie_info['Abstract']
+        $serie_info['Abstract'],
+        $_SESSION['user_id']
     ]);
     $inserted = $stmt->rowCount();
     if ($inserted ==  1) {
@@ -290,6 +291,15 @@ function add_serie($pdo, $serie_info){
  * @return array
  */
 function update_serie($pdo, $serie_info){
+    /* Check permission to edit */
+    $original_user = get_serieinfo($pdo, $serie_info['serie_id'])['user'];
+    if ($original_user != $_SESSION['user_id']) {
+        return [
+            'type' => 'danger',
+            'message' => 'You do not have permission to edit this series.'
+        ];
+    }
+
     /* Check if all fields are set */
     if (
         empty($serie_info['Name']) or
@@ -330,12 +340,13 @@ function update_serie($pdo, $serie_info){
     }
 
     /* Update Serie */
-    $stmt = $pdo->prepare("UPDATE series SET name = ?, creator = ?, seasons = ?, abstract = ? WHERE id = ?");
+    $stmt = $pdo->prepare("UPDATE series SET name = ?, creator = ?, seasons = ?, abstract = ?, user = ? WHERE id = ?");
     $stmt->execute([
         $serie_info['Name'],
         $serie_info['Creator'],
         $serie_info['Seasons'],
         $serie_info['Abstract'],
+        $_SESSION['user_id'],
         $serie_info['serie_id']
     ]);
     $updated = $stmt->rowCount();
@@ -361,7 +372,19 @@ function update_serie($pdo, $serie_info){
  */
 function remove_serie($pdo, $serie_id){
     /* Get series info */
+    p_print($serie_id);
     $serie_info = get_serieinfo($pdo, $serie_id);
+
+    /* Check permission to remove */
+    $original_user = $serie_info['user'];
+    p_print($original_user);
+    p_print($_SESSION['user_id']);
+    if ($original_user != $_SESSION['user_id']) {
+        return [
+            'type' => 'danger',
+            'message' => 'You do not have permission to remove this series.'
+        ];
+    }
 
     /* Delete Serie */
     $stmt = $pdo->prepare("DELETE FROM series WHERE id = ?");
@@ -430,7 +453,7 @@ function get_user_id(){
 }
 
 /**
- * Retrieves first- and lastname of a users id
+ * Retrieves username of a users id
  * @param object $pdo db object
  * @param integer $user_id
  * @return string
@@ -441,6 +464,20 @@ function get_username($pdo, $user_id) {
     $name = $stmt->fetchAll();
     $name = $name[0];
     return $name['username'];
+}
+
+/**
+ * Retrieves first- and lastname of a users id
+ * @param object $pdo db object
+ * @param integer $user_id
+ * @return string
+ */
+function get_user_fullname($pdo, $user_id) {
+    $stmt = $pdo->prepare('SELECT firstname, lastname FROM users WHERE id = ?');
+    $stmt->execute([$user_id]);
+    $name = $stmt->fetchAll();
+    $name = $name[0];
+    return $name['firstname'].' '.$name['lastname'];
 }
 
 /**

@@ -43,10 +43,7 @@ $template = Array(
         'name' => 'Register',
         'url' => '/ddwt18/week2/register/'
     ),
-    5 => Array(
-    'name' => 'Login',
-    'url' => '/ddwt18/week2/login/'
-));
+);
 
 /* Landing page */
 if (new_route('/ddwt18/week2/', 'get')) {
@@ -118,7 +115,7 @@ elseif (new_route('/ddwt18/week2/serie/', 'get')) {
     $page_content = $serie_info['abstract'];
     $nbr_seasons = $serie_info['seasons'];
     $creators = $serie_info['creator'];
-
+    $display_buttons = (check_login() && ($serie_info['user'] == $_SESSION['user_id']));
     $added_by = get_username($db, $serie_info['user']);
 
     /* Choose Template */
@@ -213,9 +210,9 @@ elseif (new_route('/ddwt18/week2/edit/', 'post')) {
     }
 
     /* Add serie to database */
-    $feedback = add_serie($db, $_POST);
+    $feedback = update_serie($db, $_POST);
     /* Redirect to serie GET route */
-    redirect(sprintf('/ddwt18/week2/edit/?error_msg=%s&serie_id=%s',
+    redirect(sprintf('/ddwt18/week2/serie/?error_msg=%s&serie_id=%s',
         json_encode($feedback),$_POST['serie_id']));
 }
 
@@ -227,7 +224,7 @@ elseif (new_route('/ddwt18/week2/remove/', 'post')) {
     }
 
     /* Add serie to database */
-    $feedback = add_serie($db, $_POST);
+    $feedback = remove_serie($db, $_POST['serie_id']);
     /* Redirect to serie GET route */
     redirect(sprintf('/ddwt18/week2/overview/?error_msg=%s',
         json_encode($feedback)));
@@ -241,7 +238,7 @@ elseif (new_route('/ddwt18/week2/myaccount/', 'get')) {
     }
 
     /* Page info */
-    $user = get_username($db, $_SESSION['user_id']);
+    $user = get_user_fullname($db, $_SESSION['user_id']);
     $page_title = 'My Account';
     $breadcrumbs = get_breadcrumbs([
         'ddwt18' => na('/ddwt18/', False),
@@ -331,7 +328,7 @@ elseif (new_route('/ddwt18/week2/login/', 'post')) {
     /* Login user */
     $feedback = login_user($db, $_POST);
     /* Redirect to login */
-    redirect(sprintf('/sswt18/week2/login/?error_msg=%s',
+    redirect(sprintf('/ddwt18/week2/login/?error_msg=%s',
         json_encode($feedback)));
 }
 
